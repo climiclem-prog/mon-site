@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Accueil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body onload="checkSession()">
+
+  <div class="navbar">
+    <div class="logo">MonSite</div>
+
+    <div class="nav-right">
+      <select id="pageSelect" onchange="changePage()">
+        <option value="accueil">Accueil</option>
+        <option value="profil">Profil</option>
+        <option value="parametres">Paramètres</option>
+      </select>
+
+      <button class="small-btn" onclick="logout()">Déconnexion</button>
+    </div>
+  </div>
+
+  <div class="center">
+    <h1 id="welcome"></h1>
+
+    <div id="accueil" class="page-box">
+      <h2>🏠 Accueil</h2>
+      <p>Bienvenue sur ton mini site.</p>
+    </div>
+
+    <div id="profil" class="page-box" style="display: none;">
+      <h2>👤 Profil</h2>
+      <p>Nom : <span id="userName"></span></p>
+      <p>Statut : connecté</p>
+    </div>
+
+    <div id="parametres" class="page-box" style="display: none;">
+      <h2>⚙️ Paramètres</h2>
+      <p>Ici tu peux imaginer les réglages du compte.</p>
+    </div>
+  </div>
+
+  <script>
+function logout() {
+  window.location.href = "/logout";
+}
+</script>
+
+</body>
+</html>
