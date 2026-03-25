@@ -4,25 +4,17 @@ const path = require("path");
 
 const app = express();
 
-// lire les formulaires
 app.use(express.urlencoded({ extended: true }));
 
-// fichiers publics (HTML, CSS)
-app.use(express.static("public"));
+// ✅ IMPORTANT
+app.use(express.static(path.join(__dirname, "public")));
 
-// session
 app.use(session({
   secret: "secret",
   resave: false,
   saveUninitialized: true
 }));
 
-// page connexion
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-
-// traitement login
 app.post("/login", (req, res) => {
   const { user, pass } = req.body;
 
@@ -31,14 +23,13 @@ app.post("/login", (req, res) => {
     (user === "pablo" && pass === "1234")
   ) {
     req.session.user = user;
-    res.redirect("/home");
+    res.redirect("/home.html");
   } else {
     res.send("Erreur login");
   }
 });
 
-// page protégée
-app.get("/home", (req, res) => {
+app.get("/home.html", (req, res) => {
   if (!req.session.user) {
     return res.redirect("/");
   }
@@ -46,14 +37,12 @@ app.get("/home", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "home.html"));
 });
 
-// logout
 app.get("/logout", (req, res) => {
   req.session.destroy(() => {
     res.redirect("/");
   });
 });
 
-// ⚠️ IMPORTANT POUR RENDER
 app.listen(process.env.PORT || 3000, () => {
   console.log("Serveur lancé");
 });
